@@ -51,11 +51,12 @@ def registro(request):
     if request.method == 'POST':
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
-            usuario = form.save()
-            login(request, usuario)
-            return redirect('productos:index')  # Redirige al índice
+            usuario = form.save()  # Crear el usuario
+            login(request, usuario)  # Iniciar sesión automáticamente
+            return redirect('productos:index')  # Redirigir al índice después de registrarse
     else:
-        form = RegistroUsuarioForm()
+        form = RegistroUsuarioForm()  # Crear un formulario vacío si es GET
+
     return render(request, 'productos/registro.html', {'form': form})
 
 def iniciar_sesion(request):
@@ -76,11 +77,19 @@ def iniciar_sesion(request):
 
 @login_required
 def perfil_usuario(request):
-    pedidos = Pedido.objects.filter(usuario=request.user).order_by('-fecha')
+    usuario = request.user
+    pedidos = Pedido.objects.filter(usuario=usuario)
+
+    # Obtener total de productos en el carrito desde la sesión
+    carrito = request.session.get('cart', {})
+    total_carrito = sum(item['cantidad'] for item in carrito.values())
+
     return render(request, 'productos/perfil.html', {
-        'usuario': request.user,
-        'pedidos': pedidos
+        'usuario': usuario,
+        'pedidos': pedidos,
+        'total_carrito': total_carrito
     })
+
 
 def cerrar_sesion(request):
     logout(request)

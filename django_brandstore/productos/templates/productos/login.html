@@ -5,23 +5,103 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+<style>
+    body {
+        background-image:url(../../../static/images/fondo2.jpeg) ;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2.text-center {
+        margin-bottom: 30px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    form {
+        background: #495057;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #e9e9e9;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #2a2c2e;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .btn-primary {
+        border-radius: 10px;
+        padding: 10px;
+        font-weight: 600;
+    }
+
+    .alert {
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    a {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .alert-error-custom {
+    background-color: #ffe0e6;
+    color: #b3001b;
+    border: 1px solid #ff4d6d;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-error-custom i {
+    font-size: 18px;
+}
+
+</style>
 
 <div class="container mt-5">
     <h2 class="text-center">Iniciar Sesión</h2>
 
     <!-- Mensajes del sistema (errores, etc.) -->
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-            </div>
-        {% endfor %}
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+        <div class="alert-error-custom" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> {{ message }}
+        </div>
+    {% else %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+    {% endif %}
+{% endfor %}
+
     {% endif %}
 
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form method="post" class="border p-4 rounded shadow-sm bg-light">
+            <form method="post" class=" shadow-sm bg-dark">
                 {% csrf_token %}
 
                 <div class="mb-3">
@@ -35,7 +115,7 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <p>¿No tienes una cuenta? 
+                    <p style="color: white;">¿No tienes una cuenta? 
                         <a href="{% url 'productos:registro' %}">Regístrate</a>
                     </p>
                 </div>

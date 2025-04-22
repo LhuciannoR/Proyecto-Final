@@ -1,61 +1,144 @@
 {% load static %}
 {% load widget_tweaks %}
+
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 
+<style>
+    body {
+        background-image:url(../../../static/images/fondo2.jpeg);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2.text-center {
+        margin-bottom: 30px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    form {
+        background: #495057;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #e9e9e9;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #2a2c2e;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .btn-primary {
+        border-radius: 10px;
+        padding: 10px;
+        font-weight: 600;
+    }
+
+    .alert {
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    a {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .text-error {
+        color: #ffc107;
+        font-size: 13px;
+    }
+</style>
+
 <div class="container mt-5">
-    <h2 class="text-center">Crear Cuenta</h2>
+    <h2 class="text-center">Regístrate</h2>
+
+    <!-- Mensajes del sistema -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form method="post" class="border p-4 rounded shadow-sm">
+            <form method="post" class="shadow-sm bg-dark">
                 {% csrf_token %}
 
+                <!-- Nombre de usuario -->
                 <div class="mb-3">
                     <label for="id_username" class="form-label">Nombre de Usuario</label>
-                    <input type="text" name="username" class="form-control" id="id_username" value="{{ form.username.value|default_if_none:'' }}">
+                    {{ form.username|add_class:"form-control" }}
+                    {% for error in form.username.errors %}
+                        <div class="text-error">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
+                <!-- Correo electrónico -->
                 <div class="mb-3">
                     <label for="id_email" class="form-label">Correo Electrónico</label>
-                    <input type="email" name="email" class="form-control" id="id_email" value="{{ form.email.value|default_if_none:'' }}">
+                    {{ form.email|add_class:"form-control" }}
+                    {% for error in form.email.errors %}
+                        <div class="text-error">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
+                <!-- Fecha de nacimiento -->
                 <div class="mb-3">
                     <label for="id_fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                    <input type="date" name="fecha_nacimiento" class="form-control" id="id_fecha_nacimiento" value="{{ form.fecha_nacimiento.value|default_if_none:'' }}">
+                    {{ form.fecha_nacimiento|add_class:"form-control" }}
+                    {% for error in form.fecha_nacimiento.errors %}
+                        <div class="text-error">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
+                <!-- Contraseña -->
                 <div class="mb-3">
                     <label for="id_password1" class="form-label">Contraseña</label>
-                    <input type="password" name="password1" class="form-control" id="id_password1">
+                    {{ form.password1|add_class:"form-control" }}
+                    {% for error in form.password1.errors %}
+                        <div class="text-error">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
+                <!-- Confirmar contraseña -->
                 <div class="mb-3">
                     <label for="id_password2" class="form-label">Confirmar Contraseña</label>
-                    <input type="password" name="password2" class="form-control" id="id_password2">
+                    {{ form.password2|add_class:"form-control" }}
+                    {% for error in form.password2.errors %}
+                        <div class="text-error">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
                 <div class="text-center mt-3">
-                    <p>¿Ya tienes una cuenta? <a href="{% url 'productos:login' %}">Inicia sesión</a></p>
+                    <p style="color: white;">¿Ya tienes una cuenta? 
+                        <a href="{% url 'productos:login' %}">Inicia sesión</a>
+                    </p>
                 </div>
 
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary w-100">Registrarse</button>
                 </div>
-
-                {% if form.errors %}
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <li>{{ error }}</li>
-                                {% endfor %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
             </form>
         </div>
     </div>

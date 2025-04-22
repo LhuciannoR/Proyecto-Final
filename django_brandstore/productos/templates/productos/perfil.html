@@ -2,37 +2,34 @@
 {% include 'productos/menu.html' %}
 
 <div class="container mt-5">
-
-    <div class="perfil-container">
-        <div class="row">
-            <!-- Foto de perfil con estilo circular -->
-            <div class="col-md-3 text-center">
+    <div class="perfil-container p-4">
+        <div class="row align-items-start">
+            <!-- Foto de perfil -->
+            <div class="col-md-3 text-center mb-4 mb-md-0">
                 <div class="perfil-img">
                     <img src="{% static 'images/pfp.png' %}" alt="Foto de perfil" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
                 </div>
             </div>
-            
+
             <!-- Información del Usuario -->
             <div class="col-md-9">
-                <div class="perfil-info">
-                    <h2 class="section-title mb-4">Información Personal</h2>
-                    <div class="perfil-datos">
-                        <h4>Datos de Usuario</h4>
-                        <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
-                        <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
-                        <p><strong>Fecha de nacimiento:</strong> {{ usuario.perfilusuario.fecha_nacimiento|date:"d/m/Y" }}</p>
-                    </div>
-                    
-                    <!-- Mis Pedidos -->
-                    <div class="perfil-pedidos">
-                        <h4>Mis Pedidos</h4>
-                        {% if pedidos %}
-                        <div class="row">
+                <h2 class="section-title mb-4">Información Personal</h2>
+                <div class="perfil-datos mb-5">
+                    <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
+                    <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
+                    <p><strong>Fecha de nacimiento:</strong> {{ usuario.perfilusuario.fecha_nacimiento|date:"d/m/Y" }}</p>
+                </div>
+
+                <!-- Mis Pedidos -->
+                <div class="perfil-pedidos">
+                    <h4 class="mb-4">Mis Pedidos</h4>
+                    {% if pedidos %}
+                        <div class="row gx-4 gy-4">
                             {% for pedido in pedidos %}
-                            <div class="col-md-4 mb-4">
-                                <div class="card h-100 shadow-sm" style="background-color: #343a40; color: white;">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card h-100 shadow-sm border-0" style="background-color: #2c3034; color: white; border-radius: 12px;">
                                     <div class="card-body">
-                                        <h5 class="card-title text-primary">Pedido #{{ pedido.id }}</h5>
+                                        <h5 class="card-title text-primary mb-3">Pedido #{{ pedido.id }}</h5>
                                         <p><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
                                         <p><strong>Total:</strong> ${{ pedido.total }}</p>
                                         <p><strong>Estado:</strong> 
@@ -43,15 +40,14 @@
                             </div>
                             {% endfor %}
                         </div>
-                        {% else %}
+                    {% else %}
                         <p>No tienes pedidos realizados aún.</p>
-                        {% endif %}
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 {% include 'productos/footer.html' %}
+
