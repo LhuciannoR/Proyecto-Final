@@ -1,0 +1,33 @@
+{% load static %}
+{% include 'productos/menu.html' %}
+
+<div class="container mt-5">
+    <h2 class="section-title mb-4">Productos en Oferta</h2>
+
+    {% if productos_oferta %}
+    <div class="row">
+        {% for producto in productos_oferta %}
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'productos:detalle_producto' producto.id %}">
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ producto.nombre }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion|truncatechars:60 }}</p>
+                    <p class="price">${{ producto.precio }}</p>
+                    <span class="badge bg-danger">Oferta</span>
+                    <a href="{% url 'productos:agregar_al_carrito' producto.id %}" class="btn btn-success mt-2 w-100">
+                        Agregar al carrito
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No hay productos en oferta en este momento.</p>
+    {% endif %}
+</div>
+
+{% include 'productos/footer.html' %}

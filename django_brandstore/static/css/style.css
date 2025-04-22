@@ -1,0 +1,342 @@
+:root {
+    --primary-color: #e63946;
+    --secondary-color: #f8f9fa;
+    --dark-color: #212529;
+    --light-color: #f8f8f8;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Establecemos el cuerpo para que ocupe toda la altura de la ventana */
+body {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Navbar configurado como fijo */
+.navbar {
+    background-color: rgb(20, 19, 19) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 0;
+}
+
+.navbar-brand a {
+    text-align: left;
+}
+
+.form-control {
+    width: 300px;
+    border-radius: 20px;
+}
+
+/* Estilo para la hero section */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../images/fondohero.jpg");
+    background-size: cover;
+    color: white;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    margin-bottom: 40px;
+    text-align: center;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.75rem;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #c1121f;
+    border-color: #c1121f;
+    transform: translateY(-2px);
+}
+
+/* Estilo para las secciones */
+.section-title {
+    position: relative;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+/* Estilo de las tarjetas de productos */
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.card-img-top {
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.price {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+/* Estilo de las categorías */
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espaciado entre las categorías */
+    justify-content: center; /* Centra las categorías en la fila */
+}
+
+.category-list li {
+    flex: 0 1 calc(25% - 20px); /* 25% de la fila menos el gap de 20px */
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #626568;
+    padding: 8px 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.category-list li img {
+    border-radius: 15px;
+}
+
+.category-list li:hover {
+    background-color: #232425;
+    color: white;
+    cursor: pointer;
+}
+
+/* Ajustes para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .category-list li {
+        flex: 0 1 calc(50% - 20px); /* 2 elementos por fila en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 576px) {
+    .category-list li {
+        flex: 0 1 100%; /* 1 elemento por fila en pantallas extra pequeñas */
+    }
+}
+
+
+/* Estilo para el footer */
+.footer {
+    background-color: black;
+    color: white;
+    padding: 40px 0 20px;
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: auto; /* Esto asegura que el footer se quede al fondo */
+}
+
+.footer p {
+    margin-bottom: 0;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .form-control {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+#cart-dropdown {
+    min-width: 250px;
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 1000;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+#cart-icon:hover #cart-dropdown,
+#cart-dropdown:hover {
+    display: block;
+}
+
+
+/* Estilo para el formulario */
+form {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos del formulario */
+h2 {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Estilo para los botones */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Mensajes de error */
+.alert-danger {
+    font-size: 0.9rem;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Estilos para el perfil */
+.perfil-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1.hero-title, h2.section-title, h4 {
+    color: #28a745;
+}
+
+.perfil-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.perfil-datos, .perfil-pedidos {
+    width: 48%;
+}
+
+.perfil-datos h4, .perfil-pedidos h4 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.perfil-datos p, .perfil-pedidos p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.pedido-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pedido-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.pedido-item a:hover {
+    text-decoration: underline;
+}

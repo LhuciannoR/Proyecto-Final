@@ -1,0 +1,27 @@
+{% load static %}
+{% include 'productos/menu.html' %}
+
+<br><br>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ producto.imagen.url }}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="{{ producto.nombre }}">
+                <div class="card-body text-center">
+                    <h2 class="card-title">{{ producto.nombre }}</h2>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="price"><strong>Precio:</strong> ${{ producto.precio }}</p>
+                    {% if producto.en_oferta %}
+                    <span class="badge bg-danger">Oferta</span>
+                    {% endif %}
+                    <a href="{% url 'productos:agregar_al_carrito' producto.id %}" class="btn btn-success mt-3 w-100">
+                        Agregar al carrito
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'productos/footer.html' %}

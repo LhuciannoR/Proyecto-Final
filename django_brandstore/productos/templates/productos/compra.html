@@ -1,0 +1,23 @@
+{% load static %}
+{% include 'productos/menu.html' %}
+
+<div class="container text-center mt-5 mb-5 p-4 shadow rounded">
+    <h2 class="text-success">¡Compra Exitosa!</h2>
+    <p>Gracias por tu compra</p>
+    
+    <hr class="my-4">
+
+    <h5>Detalles de tu orden</h5>
+    <p><strong>Número de orden:</strong> #{{ pedido.id }}</p>
+    <p><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y H:i" }}</p>
+    <p><strong>Total:</strong> ${{ pedido.total }}</p>
+
+    <a href="{% url 'productos:index' %}" class="btn btn-success me-2 mt-3">
+        <i class="fas fa-home"></i> Volver al inicio
+    </a>
+    <a href="{% url 'productos:categorias' %}" class="btn btn-outline-secondary mt-3">
+        Seguir comprando
+    </a>
+</div>
+
+{% include 'productos/footer.html' %}

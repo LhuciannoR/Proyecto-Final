@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/logobs.png' %}" type="image-png">
+    <title>Brand Store</title>
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="{% url 'productos:index' %}" class="navbar-brand d-flex align-items-center">
+                <img src="{% static 'images/logobs.png' %}" alt="Logo" width="70px" height="70px">
+                <span class="ms-2">Brand Store</span>
+            </a>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos:index' %}">
+                        <i class="fas fa-home"></i> Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos:categorias' %}">
+                        <i class="fas fa-th-list"></i> Categorías
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos:productos_en_oferta' %}">
+                        <i class="fas fa-tags"></i> Ofertas
+                    </a>
+                </li>
+            </ul>
+
+            <form class="d-flex align-items-center" method="get" action="{% url 'productos:buscar_productos' %}">
+                <input class="form-control me-2" type="search" placeholder="Buscar productos..." name="search-input" id="search-input" aria-label="Buscar">
+
+                <!-- Ícono de usuario -->
+                <a href="{% url 'productos:perfil' %}" class="text-white me-3 fs-5"><i class="fas fa-user"></i></a>
+
+                <!-- Ícono del carrito -->
+                <div class="position-relative me-2" id="cart-icon">
+                    <a href="{% url 'productos:carrito' %}" class="text-white fs-5 position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        {% if total_carrito > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ total_carrito }}
+                        </span>
+                        {% endif %}
+                    </a>
+
+                    <!-- Ventana emergente del carrito -->
+                    <div class="cart-dropdown position-absolute bg-white text-dark p-3 border rounded shadow"
+                         style="display: none; z-index: 1000; width: 250px; right: 0; top: 40px;" id="cart-summary">
+                        <strong>Resumen del carrito</strong>
+                        <hr>
+                        {% if request.session.cart %}
+                        {% for id, item in request.session.cart.items %}
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span>{{ item.nombre }} x{{ item.cantidad }}</span>
+                            <a href="{% url 'productos:eliminar_del_carrito' producto_id=id %}" class="text-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    
+                            <hr>
+                            <a href="{% url 'productos:carrito' %}" class="btn btn-sm btn-primary w-100 mt-2">Ver todo</a>
+                        {% else %}
+                            <p class="text-muted">El carrito está vacío</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const cartIcon = document.getElementById('cart-icon');
+    const cartSummary = document.getElementById('cart-summary');
+
+    // Mostrar la ventanita cuando el mouse pasa sobre el ícono del carrito
+    cartIcon.addEventListener('mouseenter', function() {
+        cartSummary.style.display = 'block';
+    });
+
+    // Ocultar la ventanita cuando el mouse sale del ícono del carrito
+    cartIcon.addEventListener('mouseleave', function() {
+        cartSummary.style.display = 'none';
+    });
+
+    // Mostrar la ventanita si el mouse pasa sobre ella (dropdown)
+    cartSummary.addEventListener('mouseenter', function() {
+        cartSummary.style.display = 'block';
+    });
+
+    // Ocultar la ventanita si el mouse sale de la ventanita
+    cartSummary.addEventListener('mouseleave', function() {
+        cartSummary.style.display = 'none';
+    });
+});
+</script>
+</body>
+
+</html>

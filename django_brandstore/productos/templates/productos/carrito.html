@@ -1,0 +1,61 @@
+{% load static %}
+{% include 'productos/menu.html' %}
+
+<div class="container mt-5">
+    <h2>Carrito de Compras</h2>
+
+    {% if carrito %}
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Imagen</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id, item in carrito.items %}
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td><img src="{{ item.imagen }}" width="60"></td>
+
+                    <td>
+                        <form action="{% url 'productos:modificar_cantidad_carrito' producto_id=id %}" method="post" class="d-flex">
+                            {% csrf_token %}
+                            <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" class="form-control form-control-sm me-2" style="width: 70px;">
+                            <button type="submit" class="btn btn-sm btn-primary">Actualizar</button>
+                        </form>
+                    </td>
+
+                    <td>${{ item.precio|floatformat:2 }}</td>
+                    <td>${{ item.subtotal|floatformat:2 }}</td>
+
+                    <td>
+                        <a href="{% url 'productos:eliminar_del_carrito' producto_id=id %}" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4 class="text-end">Total: <strong>${{ total|floatformat:2 }}</strong></h4>
+
+        <div class="d-flex justify-content-end mt-3">
+            <a href="{% url 'productos:vaciar_carrito' %}" class="btn btn-danger me-2">
+                <i class="fas fa-trash-alt"></i> Vaciar carrito
+            </a>
+            <a href="{% url 'productos:compra_exitosa' %}" class="btn btn-success">
+                <i class="fas fa-check"></i> Finalizar compra
+            </a>
+        </div>
+    {% else %}
+        <p>El carrito está vacío.</p>
+    {% endif %}
+</div>
+
+{% include 'productos/footer.html' %}
